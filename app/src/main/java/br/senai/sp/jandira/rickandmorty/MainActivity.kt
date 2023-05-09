@@ -57,7 +57,7 @@ fun Greeting(name: String) {
     Column(modifier = Modifier.padding(16.dp)) {
         Button(onClick = {
             //cria uma chamada para o endpoint
-            val call = RetrofitFactory().getCharacterService().getCharactersByPage(42)
+            val call = RetrofitFactory().getCharacterService().getCharacterByNameAndStatus("rick", "dead")
 
             //executa a chamada
             call.enqueue(object : Callback<CharacterList>{
@@ -67,6 +67,7 @@ fun Greeting(name: String) {
                 ) {
                     listCharacter = response.body()!!.results
                     info = response.body()!!.info
+
                 }
 
                 override fun onFailure(call: Call<CharacterList>, t: Throwable) {
@@ -121,6 +122,7 @@ fun Greeting(name: String) {
                                 fontWeight = FontWeight.Bold
                             )
                             Text(text = it.species)
+                            Text(text = it.origin.name)
                         }
                     }
                 }
